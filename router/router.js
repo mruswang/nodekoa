@@ -12,6 +12,8 @@ module.exports = (app) => {
   
   // 增加响应表单请求的路由
   router.post('/user/register', HomeController.register)
+
+  router.post('/api/addinformation', HomeController.addinformation)
   
   app.use(router.routes())
     .use(router.allowedMethods())

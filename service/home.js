@@ -1,3 +1,9 @@
+const monk = require('monk')
+const url = 'localhost:27017/admin';
+
+const db = monk(url);
+
+const collection = db.get('home')
 module.exports = {
   register: async(name, pwd) => {
     let data 
@@ -19,5 +25,12 @@ module.exports = {
         }
       }
       return data
+    },
+  addinformation: async(name) => {
+    let data 
+      collection.insert(name)
+      return data = {
+          status: 200 
+        }
     }
 }

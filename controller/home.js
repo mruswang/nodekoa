@@ -1,4 +1,5 @@
 const HomeService = require('../service/home')
+
 module.exports = {
   index: async(ctx, next) => {
    await ctx.render("home/index", {title: "iKcamp欢迎您"})
@@ -25,6 +26,18 @@ module.exports = {
     }else{
       ctx.state.title = "个人中心"
       await ctx.render("home/success", res.data)
+    }
+  },
+  addinformation: async(ctx, next) => {
+    let {imglist} = ctx.request.body.params
+    //let imglist = params.params.imglist
+    let res = await HomeService.addinformation(imglist)
+    if(res.status == 200){
+      ctx.body={
+        success:"成功"
+      }
+    }else{
+      
     }
   }
 }
