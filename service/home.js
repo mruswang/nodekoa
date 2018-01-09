@@ -26,9 +26,9 @@ module.exports = {
       }
       return data
     },
-  addinformation: async(name) => {
+  addinformation: async(imglist,title,feng,interest,city,shequ,zan,from,fromsvalue) => {
     let data 
-      collection.insert(name)
+      collection.insert({imglist:imglist,title:title,feng:feng,interest:interest,sheng:city[0],shi:city[1],qu:city[2],shequ:shequ,zan:zan,from:from,fromsvalue:fromsvalue})
       return data = {
           status: 200 
         }

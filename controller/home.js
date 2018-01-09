@@ -29,9 +29,9 @@ module.exports = {
     }
   },
   addinformation: async(ctx, next) => {
-    let {imglist} = ctx.request.body.params
+    let {imglist,title,feng,interest,city,shequ,zan,from,fromsvalue} = ctx.request.body.params
     //let imglist = params.params.imglist
-    let res = await HomeService.addinformation(imglist)
+    let res = await HomeService.addinformation(imglist,title,feng,interest,city,shequ,zan,from,fromsvalue)
     if(res.status == 200){
       ctx.body={
         success:"成功"
