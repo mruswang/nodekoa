@@ -18,6 +18,8 @@ var puploadimg = multer({ storage: storage });
 
 module.exports = (app) => {
   router.get('/', HomeController.index)
+
+  router.get('/admin', HomeController.admin)
   
   router.get('/home', HomeController.home)
   

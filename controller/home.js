@@ -1,9 +1,11 @@
 const HomeService = require('../service/home')
 
-
 module.exports = {
   index: async(ctx, next) => {
-   await ctx.render("home/index", {title: "iKcamp欢迎您"})
+   await ctx.render("home/home")
+  },
+  admin: async(ctx, next) => {
+   await ctx.render("home/admin")
   },
   home: async(ctx, next) => {
     ctx.send({status:200})
