@@ -3,7 +3,7 @@ const url = 'localhost:27017/admin';
 
 const db = monk(url);
 
-const collection = db.get('home')
+const collection = db.get('zixun')
 module.exports = {
   register: async(name, pwd) => {
     let data 
@@ -32,5 +32,13 @@ module.exports = {
       return data = {
           status: 200 
         }
-    }
+    },
+  uploadimg: async(text) => {
+    console.log(text)
+  let data 
+    
+    return data = {
+        status: 200 
+      }
+  }
 }

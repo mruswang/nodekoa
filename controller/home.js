@@ -1,5 +1,6 @@
 const HomeService = require('../service/home')
 
+
 module.exports = {
   index: async(ctx, next) => {
    await ctx.render("home/index", {title: "iKcamp欢迎您"})
@@ -15,6 +16,23 @@ module.exports = {
     await ctx.render('home/login',{
       btnName: 'GoGoGo'
     })
+  },
+  upload: async(ctx, next) => {
+    await ctx.render('home/upload',{
+      btnName: 'upload'
+    })
+  },
+  uploadimg: async(ctx, next) => {
+    let params = ctx.request.file
+    console.log(params)
+    // let res = await HomeService.uploadimg(params)
+    // if(res.status == 200){
+    //   ctx.body={
+    //     success:"成功"
+    //   }
+    // }else{
+      
+    // }
   },
   register: async(ctx, next) => {
     let params = ctx.request.body
@@ -34,7 +52,8 @@ module.exports = {
     let res = await HomeService.addinformation(imglist,title,feng,interest,city,shequ,zan,from,fromsvalue)
     if(res.status == 200){
       ctx.body={
-        success:"成功"
+        success:"成功",
+        data: ctx.request.body.params
       }
     }else{
       
