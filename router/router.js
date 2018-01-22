@@ -1,5 +1,9 @@
 const router = require('koa-router')()
 const HomeController = require('../controller/home')
+const MemberController = require('../controller/member')
+const ArticleController = require('../controller/article')
+const ProductController = require('../controller/product')
+const ImgController = require('../controller/img-category')
 
 const multer = require('koa-multer')
 var storage = multer.diskStorage({  
@@ -20,12 +24,26 @@ module.exports = (app) => {
   router.get('/', HomeController.index)
 
   router.get('/admin', HomeController.admin)
+
+  router.get('/member-list', MemberController.memberList)
+
+  router.get('/member-add', MemberController.memberAdd)
   
-  router.get('/home', HomeController.home)
-  
-  router.get('/home/:id/:name', HomeController.homeParams)
-  
-  router.get('/user', HomeController.login)
+  router.get('/article-list', ArticleController.articleList)
+
+  router.get('/article-add', ArticleController.articleAdd)
+
+  router.get('/article-category', ArticleController.articleCategory)
+
+  router.get('/article-category-add', ArticleController.articleCategoryAdd)
+
+  router.get('/product-list', ProductController.productList)
+
+  router.get('/product-add', ProductController.productAdd)
+
+  router.get('/product-category', ProductController.productCategory)
+
+  router.get('/product-category-add', ProductController.productCategoryAdd)
 
   router.get('/upload', HomeController.upload)
 
@@ -46,7 +64,13 @@ module.exports = (app) => {
       success:"成功",
       filename: `http://${ctx.host}/uploads/${ctx.req.file.filename}`
     }
-	}) 
+	})
+  //增加图片分类的路由 
+  router.post('/admin/img-category-add', ImgController.imgCategoryAdd)
+
+  router.get('/admin/img-category', ImgController.imgCategory)
+
+  router.post('/admin/img-category-del', ImgController.imgCategoryDel)
 
   app.use(router.routes())
     .use(router.allowedMethods())

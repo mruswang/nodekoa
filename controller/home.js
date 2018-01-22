@@ -2,10 +2,17 @@ const HomeService = require('../service/home')
 
 module.exports = {
   index: async(ctx, next) => {
-   await ctx.render("home/home")
+   await ctx.render("index/index")
   },
   admin: async(ctx, next) => {
-   await ctx.render("home/admin")
+    //获取cookie
+    let is_login=true
+
+    if(is_login){
+      await ctx.render("admin/index",{title: "首页"})
+    }else{
+      await ctx.render("admin/login")
+    }
   },
   home: async(ctx, next) => {
     ctx.send({status:200})
