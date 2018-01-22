@@ -59,7 +59,7 @@ module.exports = (app) => {
 
   router.post('/api/addinformation', HomeController.addinformation)
   
-  router.post('/api/upload',puploadimg.single('file'),  async (ctx, next) => {  
+  router.post('/admin/upload',puploadimg.single('file'),  async (ctx, next) => {  
     ctx.body={
       success:"成功",
       filename: `http://${ctx.host}/uploads/${ctx.req.file.filename}`
