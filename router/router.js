@@ -1,15 +1,33 @@
 const router = require('koa-router')()
+const fs = require('fs')
 const HomeController = require('../controller/home')
 const MemberController = require('../controller/member')
 const ArticleController = require('../controller/article')
 const ProductController = require('../controller/product')
-const ImgController = require('../controller/img-category')
+const ImgCategoryController = require('../controller/img-category')
+const ImgController = require('../controller/img')
 
 const multer = require('koa-multer')
+
+
+let myDate = new Date();
+let year = myDate.getFullYear()
+let month = myDate.getMonth() +1;
+let day = myDate.getDate();
+let noetime= `${year}-${month}-${day}`
+
 var storage = multer.diskStorage({  
   //文件保存路径  
-  destination: function (req, file, cb) {  
-    cb(null, 'public/uploads/')  
+  destination: function (req, file, cb) { 
+    fs.exists(`public/uploads/${noetime}`, function (exists) {
+      if(!exists){
+        fs.mkdir(`public/uploads/${noetime}`,function(){
+          cb(null, `public/uploads/${noetime}/`)
+        })
+      }else{
+        cb(null, `public/uploads/${noetime}/`)
+      }
+    })
   },  
   //修改文件名称  
   filename: function (req, file, cb) {  
@@ -29,48 +47,28 @@ module.exports = (app) => {
 
   router.get('/member-add', MemberController.memberAdd)
   
-  router.get('/article-list', ArticleController.articleList)
-
-  router.get('/article-add', ArticleController.articleAdd)
-
-  router.get('/article-category', ArticleController.articleCategory)
-
-  router.get('/article-category-add', ArticleController.articleCategoryAdd)
-
-  router.get('/product-list', ProductController.productList)
-
-  router.get('/product-add', ProductController.productAdd)
-
-  router.get('/product-category', ProductController.productCategory)
-
-  router.get('/product-category-add', ProductController.productCategoryAdd)
-
-  router.get('/upload', HomeController.upload)
-
-  router.post('/upload',puploadimg.single('file'),  async (ctx, next) => {  
-  	console.log(ctx.req.file)
-	  ctx.body = {  
-	    filename: ctx.req.file.filename//返回文件名  
-	  }  
-	})
-  
-  // 增加响应表单请求的路由
-  router.post('/user/register', HomeController.register)
-
-  router.post('/api/addinformation', HomeController.addinformation)
-  
+  // 增加图片上传
   router.post('/admin/upload',puploadimg.single('file'),  async (ctx, next) => {  
     ctx.body={
       success:"成功",
-      filename: `http://${ctx.host}/uploads/${ctx.req.file.filename}`
+      filename: `http://${ctx.host}/uploads/${noetime}/${ctx.req.file.filename}`
     }
 	})
   //增加图片分类的路由 
-  router.post('/admin/img-category-add', ImgController.imgCategoryAdd)
+  router.post('/admin/img-category-add', ImgCategoryController.imgCategoryAdd)
 
-  router.get('/admin/img-category', ImgController.imgCategory)
+  router.get('/admin/img-category', ImgCategoryController.imgCategory)
 
-  router.post('/admin/img-category-del', ImgController.imgCategoryDel)
+  router.post('/admin/img-category-del', ImgCategoryController.imgCategoryDel)
+
+  //增加图片路由
+  router.post('/admin/img-add', ImgController.imgAdd)
+
+  router.post('/admin/img-detail', ImgController.imgDetail)
+
+  router.get('/admin/img-list', ImgController.imgList)
+
+  router.post('/admin/img-del', ImgController.imgDel)
 
   app.use(router.routes())
     .use(router.allowedMethods())
