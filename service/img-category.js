@@ -28,7 +28,7 @@ module.exports = {
   },
   imgCategory: async() => {
     return new Promise(function(resolve) {
-      collection.find({},{limit:1}).then((docs) => { 
+      collection.find({}).then((docs) => { 
         resolve(Object.assign(docs, {status:200}))
       })
     })

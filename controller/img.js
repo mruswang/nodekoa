@@ -7,8 +7,9 @@ module.exports = {
     let res = await imgService.imgAdd(_id,name,category,imgurl,resource,collect,desc)
     if(res.status == 200){
       ctx.body={
+        status:"200",
         success:"成功",
-        data: ctx.request.body.params
+        data: ctx.request.body
       }
     }else{
       
@@ -19,6 +20,7 @@ module.exports = {
     let res = await imgService.imgDel(_id)
     if(res.status == 200){
       ctx.body={
+        status:"200",
         success:"成功",
         data: ctx.request.body
       }

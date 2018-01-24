@@ -36,7 +36,7 @@ module.exports = {
   },
   imgList: async() => {
     return new Promise(function(resolve) {
-      collection.find({}).then((docs) => { 
+      collection.find({},{sort:{creatime: -1}}).then((docs) => {  //{limit:5,sort:{creatime: -1}}
         resolve(Object.assign(docs, {status:200}))
       })
     })

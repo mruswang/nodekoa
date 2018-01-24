@@ -6,6 +6,7 @@ module.exports = {
     let res = await imgCategoryService.imgCategoryAdd(_id,parentId,name)
     if(res.status == 200){
       ctx.body={
+        status:"200",
         success:"成功",
         data: ctx.request.body.params
       }
@@ -18,6 +19,7 @@ module.exports = {
     let res = await imgCategoryService.imgCategoryDel(_id)
     if(res.status == 200){
       ctx.body={
+        status:"200",
         success:"成功",
         data: ctx.request.body.params
       }

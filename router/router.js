@@ -6,6 +6,7 @@ const ArticleController = require('../controller/article')
 const ProductController = require('../controller/product')
 const ImgCategoryController = require('../controller/img-category')
 const ImgController = require('../controller/img')
+const AdminController = require('../controller/admin')
 
 const multer = require('koa-multer')
 
@@ -42,10 +43,6 @@ module.exports = (app) => {
   router.get('/', HomeController.index)
 
   router.get('/admin', HomeController.admin)
-
-  router.get('/member-list', MemberController.memberList)
-
-  router.get('/member-add', MemberController.memberAdd)
   
   // 增加图片上传
   router.post('/admin/upload',puploadimg.single('file'),  async (ctx, next) => {  
@@ -69,6 +66,17 @@ module.exports = (app) => {
   router.get('/admin/img-list', ImgController.imgList)
 
   router.post('/admin/img-del', ImgController.imgDel)
+
+  //增加管理员
+  router.post('/admin/admin-add', AdminController.adminAdd)
+
+  router.get('/admin/admin-list', AdminController.adminList)
+
+  router.post('/admin/admin-detail', AdminController.adminDetail)
+
+  router.post('/admin/admin-del', AdminController.adminDel)
+
+  router.post('/admin/admin-pass', AdminController.adminPass)
 
   app.use(router.routes())
     .use(router.allowedMethods())
