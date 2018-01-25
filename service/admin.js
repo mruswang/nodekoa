@@ -65,4 +65,15 @@ module.exports = {
       })
     })
   },
+  adminLogin: async(name,pass) => {
+    return new Promise(function(resolve) {
+      collection.find({name: name}).then((docs) => { 
+        if(docs[0].pass !== pass){
+          resolve({status:400})
+        }else{
+          resolve(Object.assign(docs, {status:200}))
+        }
+      })
+    })
+  }
 }

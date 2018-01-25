@@ -78,6 +78,8 @@ module.exports = (app) => {
 
   router.post('/admin/admin-pass', AdminController.adminPass)
 
+  router.post('/admin/admin-login', AdminController.adminLogin)
+
   app.use(router.routes())
     .use(router.allowedMethods())
 }
