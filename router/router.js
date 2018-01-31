@@ -7,6 +7,7 @@ const ProductController = require('../controller/product')
 const ImgCategoryController = require('../controller/img-category')
 const ImgController = require('../controller/img')
 const AdminController = require('../controller/admin')
+
 const gm = require('gm')
 
 const multer = require('koa-multer')
@@ -95,6 +96,15 @@ module.exports = (app) => {
   router.post('/admin/admin-pass', AdminController.adminPass)
 
   router.post('/admin/admin-login', AdminController.adminLogin)
+
+  //增加用户
+  router.post('/admin/member-add', MemberController.memberAdd)
+
+  router.get('/admin/member-list', MemberController.memberList)
+
+  router.post('/admin/member-detail', MemberController.memberDetail)
+
+  router.post('/admin/member-del', MemberController.memberDel)
 
   app.use(router.routes())
     .use(router.allowedMethods())

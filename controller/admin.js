@@ -160,7 +160,8 @@ module.exports = {
       ctx.body = {
         status:200,
         message:'成功',
-        data: token
+        data: token,
+        name: name
       }
     }else{
       ctx.body={

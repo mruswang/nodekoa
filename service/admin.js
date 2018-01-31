@@ -19,15 +19,11 @@ module.exports = {
           resolve(Object.assign(docs, {status:200}))
         })
       }else{
-        if(phone !== 18382196395){
-          resolve({status:400})
-        }else{
-          collection.find({_id: _id}).then((docs) => { 
-            collection.update({_id: _id}, {name:name,email:email,pass:pass,phone:phone,status:status,updatetime:noetime,creatime:docs[0].creatime}).then((docss) => { 
-              resolve(Object.assign(docss, {status:200}))
-            })
+        collection.find({_id: _id}).then((docs) => { 
+          collection.update({_id: _id}, {name:name,email:email,pass:pass,phone:phone,status:status,updatetime:noetime,creatime:docs[0].creatime}).then((docss) => { 
+            resolve(Object.assign(docss, {status:200}))
           })
-        }
+        })
       }
     })
   },
