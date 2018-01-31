@@ -7,9 +7,9 @@ const ProductController = require('../controller/product')
 const ImgCategoryController = require('../controller/img-category')
 const ImgController = require('../controller/img')
 const AdminController = require('../controller/admin')
+const gm = require('gm')
 
 const multer = require('koa-multer')
-
 
 let myDate = new Date();
 let year = myDate.getFullYear()
@@ -17,7 +17,7 @@ let month = myDate.getMonth() +1;
 let day = myDate.getDate();
 let noetime= `${year}-${month}-${day}`
 
-var storage = multer.diskStorage({  
+let storage = multer.diskStorage({  
   //文件保存路径  
   destination: function (req, file, cb) { 
     fs.exists(`public/uploads/${noetime}`, function (exists) {
@@ -32,12 +32,17 @@ var storage = multer.diskStorage({
   },  
   //修改文件名称  
   filename: function (req, file, cb) {  
-    var fileFormat = (file.originalname).split(".");  
-    cb(null,Date.now() + "." + fileFormat[fileFormat.length - 1]);  
-  }  
+    let fileFormat = (file.originalname).split(".");  
+    let now =  Date.now()
+    let random = Math.floor(Math.random()*100) > 10 ? Math.floor(Math.random()*100) : Math.floor(Math.random()*100)+'0'
+    cb(null,now + '.png' ); 
+    cb(null,now* random + `${random}.jpg`); 
+    //cb(null,Date.now()*Math.floor(Math.random()*100) + "." + fileFormat[fileFormat.length - 1]);  
+  }
 })  
+
 //加载配置  
-var puploadimg = multer({ storage: storage });  
+let puploadimg = multer({ storage: storage });  
 
 module.exports = (app) => {
   router.get('/', HomeController.index)
@@ -45,7 +50,18 @@ module.exports = (app) => {
   router.get('/admin', HomeController.admin)
   
   // 增加图片上传
-  router.post('/admin/upload',puploadimg.single('file'),  async (ctx, next) => {  
+  router.post('/admin/upload',puploadimg.single('file'),  async (ctx, next) => { 
+    gm(`public/uploads/${noetime}/${ctx.req.file.filename}`)
+    .size(function (err, size) {
+      if(size.width>=480){
+        gm(`public/uploads/${noetime}/${ctx.req.file.filename}`)
+        .resize(480)
+        .write(`public/uploads/${noetime}/${ctx.req.file.filename}`, function (err) {
+          if (!err) console.log('done');
+        })
+      }
+    });
+    
     ctx.body={
       success:"成功",
       filename: `http://${ctx.host}/uploads/${noetime}/${ctx.req.file.filename}`
